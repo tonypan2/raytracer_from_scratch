@@ -1,0 +1,4 @@
+*.o
+raytrace
+.vscode
+.DS_Store

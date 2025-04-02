@@ -9,9 +9,9 @@
 
 using namespace std;
 
-namespace Raytracer  
+namespace Raytracer
 {
-  const double PI = 4.0*atan(1.0);
+  const double PI = 4.0 * atan(1.0);
 };
 
 #endif

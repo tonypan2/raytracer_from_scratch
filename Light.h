@@ -9,7 +9,7 @@
 
 namespace Raytracer
 {
-  class Light 
+  class Light
   {
   public:
     Light(double x, double y, double z, double r, double g, double b,
@@ -21,8 +21,8 @@ namespace Raytracer
                         // is named r
     }
     Vector position; // Light position
-    Color color; // Light color
-    double r; // Light radius
+    Color color;     // Light color
+    double r;        // Light radius
   };
 };
 

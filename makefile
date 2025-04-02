@@ -10,23 +10,19 @@ CC=g++
 #  -g (add debugging information)
 #  -O (optimize)
 
-FLAGS=-c -gstabs -I/usr/include
+FLAGS=-c -g
 
 LINKTO=-o raytrace
 
-# This specifies where the libraries (listed below) are located. To specify
-# more than one directory, simply add another '-L/...' to the line.
-LIBDIRS = -L/usr/X11R6/lib
-
 # This specifies what libraries to link to. The actual library filenames
 # have the form 'libGLU.so' or 'libGLU.a', and they are located as above.
-LIBS = -lGLU -lGL -lglut -lXmu -lXext -lX11 -lXi -lm
+LIBS = -framework OpenGL -framework GLUT -framework Cocoa -lm
 
 #------------------------------------
 OBJECTS = Main.o Plane.o Scene.o Sphere.o Texture.o
 
 raytrace: $(OBJECTS)
-	$(CC) $(LINKTO) $(OBJECTS) $(LIBDIRS) $(LIBS)
+	$(CC) $(LINKTO) $(OBJECTS) $(LIBS)
 
 Main.o: Main.cpp Light.h Scene.h Sphere.h Plane.h
 	$(CC) $(FLAGS) Main.cpp

@@ -13,11 +13,10 @@ namespace Raytracer
                double kd_r, double kd_g, double kd_b,
                double ks_r, double ks_g, double ks_b, double ns,
                double k_reflect, double k_refract, double refract_index,
-               char* texture_file, char* bump_map,
-               double px, double py, double pz, 
-               double nx, double ny, double nz):
-  Object(ka_r, ka_g, ka_b, kd_r, kd_g, kd_b, ks_r, ks_g, ks_b, ns, 
-         k_reflect, k_refract, refract_index, texture_file, bump_map)
+               char *texture_file, char *bump_map,
+               double px, double py, double pz,
+               double nx, double ny, double nz) : Object(ka_r, ka_g, ka_b, kd_r, kd_g, kd_b, ks_r, ks_g, ks_b, ns,
+                                                         k_reflect, k_refract, refract_index, texture_file, bump_map)
   {
     point = Vector(px, py, pz);
     norm = Vector(nx, ny, nz).normalize();
@@ -32,13 +31,13 @@ namespace Raytracer
   double Plane::intersect(Ray ray)
   {
     double ND = ray.direction.dot(norm);
-    if (ND==0)
+    if (ND == 0)
     {
       return -1;
     }
     else
     {
-      return norm.dot(point-ray.start)/ND;
+      return norm.dot(point - ray.start) / ND;
     }
   }
 
@@ -50,8 +49,8 @@ namespace Raytracer
       return norm;
     }
     Vector texture_pos = map_to_texture(position);
-    return bump_map->apply_bump(texture_pos.x*bump_map->w, 
-                                texture_pos.y*bump_map->w,
+    return bump_map->apply_bump(texture_pos.x * bump_map->w,
+                                texture_pos.y * bump_map->w,
                                 norm);
   }
 
@@ -63,8 +62,8 @@ namespace Raytracer
       return Color(1, 1, 1);
     }
     Vector texture_pos = map_to_texture(position);
-    return texture->acquire_color(texture_pos.x*texture->w, 
-                                  texture_pos.y*texture->w, true);
+    return texture->acquire_color(texture_pos.x * texture->w,
+                                  texture_pos.y * texture->w, true);
   }
 
   // Convert plane coordinates to texture coordinates (scaled down w times)
@@ -73,29 +72,29 @@ namespace Raytracer
   Vector Plane::map_to_texture(Vector position)
   {
     double x, y, int_part, k, ratio;
-    x = (position-point).dot(u)/5.0;
-    y = (position-point).dot(v)/5.0;
+    x = (position - point).dot(u) / 5.0;
+    y = (position - point).dot(v) / 5.0;
     if (bump_map->is_empty)
     {
-      ratio = (double)texture->h/texture->w;
+      ratio = (double)texture->h / texture->w;
     }
     else
     {
-      ratio = (double)bump_map->h/bump_map->w;
+      ratio = (double)bump_map->h / bump_map->w;
     }
     x = modf(x, &int_part);
-    if (x<0)
+    if (x < 0)
     {
       x++;
     }
-    k = floor(abs(y)/ratio)*ratio;
-    if (y>0)
+    k = floor(abs(y) / ratio) * ratio;
+    if (y > 0)
     {
       y -= k;
     }
     else
     {
-      y = ratio+y+k;
+      y = ratio + y + k;
     }
     return Vector(x, y, 0);
   }

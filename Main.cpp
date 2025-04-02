@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <stdlib.h>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 
 #include "Plane.h"
 #include "Sphere.h"
@@ -14,7 +14,7 @@ using namespace std;
 using namespace Raytracer;
 
 // Image buffer
-float* pic;
+float *pic;
 
 // Constants
 const int winW = 800; // Window dimensions
@@ -40,16 +40,16 @@ void cleanup();
 void display(void)
 {
   int error;
-  
+
   // Clear the frame buffer to begin a new frame
   glClear(GL_COLOR_BUFFER_BIT);
-  
+
   // Draw graph
   glDrawPixels(winW, winH, GL_RGB, GL_FLOAT, pic);
-  
+
   // Frame buffer is complete, so move it to "front" for screen display
   glutSwapBuffers();
-  
+
   // Detect rendering errors (note that the call to glGetError() clears
   // the error condition too, so call it once and save the error code).
   error = glGetError();
@@ -66,7 +66,7 @@ void init_display()
   glutInitWindowSize(winW, winH);
   glutInitWindowPosition(100, 100);
   glutCreateWindow("Raytracing");
-  
+
   // Register callback functions for glut
   glutDisplayFunc(display);
   atexit(cleanup);
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
   // www.opengl.org/resources/code/samples/sig99/advanced99/notes/node153.html
   // Textures from:
   // planetpixelemporium.com and cgtextures.com
-  Sphere ball1(0.25, 0.20725, 0.20725, 0.829, 0.829, 0.922, 
+  Sphere ball1(0.25, 0.20725, 0.20725, 0.829, 0.829, 0.922,
                0.296648, 0.296648, 0.922, 100, 0.1, 0, 0, "earth.ppm",
                "earth_bump.ppm",
                -0.7, -0.5, -10, 1);
@@ -111,8 +111,8 @@ int main(int argc, char *argv[])
                0.256777, 0.137622, 0.086014, 100, 0.2, 0.8, 1.755, "", "",
                -0.4, -1, -3, 0.5);
 
-  Sphere ball3(0.25, 0.20725, 0.20725, 0.829, 0.829, 0.922, 
-               0.296648, 0.296648, 0.922, 100, 0, 0.5, 0, "venus.ppm", 
+  Sphere ball3(0.25, 0.20725, 0.20725, 0.829, 0.829, 0.922,
+               0.296648, 0.296648, 0.922, 100, 0, 0.5, 0, "venus.ppm",
                "venus_bump.ppm",
                0.3, -1.1, -1, 0.4);
 
@@ -121,11 +121,11 @@ int main(int argc, char *argv[])
                0.5, -0.8, -6, 0.7);
 
   // Create planes
-  Plane plane1(0.25, 0.20725, 0.20725, 0.829, 0.829, 0.922, 
+  Plane plane1(0.25, 0.20725, 0.20725, 0.829, 0.829, 0.922,
                0.296648, 0.296648, 0.922, 20, 0.6, 0, 0, "ground.ppm", "",
                0, -1.5, 0, 0, 1, 0);
-   
-  Plane plane2(0.25, 0.20725, 0.20725, 0.829, 0.829, 0.922, 
+
+  Plane plane2(0.25, 0.20725, 0.20725, 0.829, 0.829, 0.922,
                0.296648, 0.296648, 0.922, 20, 0, 0, 0, "", "",
                0, 10, 0, 0, -1, 0);
 
@@ -135,10 +135,14 @@ int main(int argc, char *argv[])
   Light light2(1, 1, -2, 1, 1, 1, 0.5);
 
   // Add objects and lights to the scene
-  scene.add_object(&ball1); scene.add_object(&ball2);
-  scene.add_object(&ball3); scene.add_object(&ball4);
-  scene.add_object(&plane1); scene.add_object(&plane2);
-  scene.add_light(&light1); scene.add_light(&light2);
+  scene.add_object(&ball1);
+  scene.add_object(&ball2);
+  scene.add_object(&ball3);
+  scene.add_object(&ball4);
+  scene.add_object(&plane1);
+  scene.add_object(&plane2);
+  scene.add_light(&light1);
+  scene.add_light(&light2);
 
   // Render scene
   pic = scene.render(pic);
